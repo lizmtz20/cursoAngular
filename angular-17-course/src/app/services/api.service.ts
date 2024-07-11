@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-@Injectable({
+@Injectable(/*{
   providedIn: 'root'
-})
+}*/)
 export class ApiService {
 
   constructor(
@@ -36,4 +36,8 @@ export class ApiService {
   delete<T>(id: number) {
     return this.http.delete<T>(this.baseUrl + '/' + id);
   }
+}
+
+function apiServiceConfig(http: HttpClient){
+  return new ApiService(http);
 }
