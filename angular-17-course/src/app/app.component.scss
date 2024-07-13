@@ -1,5 +1,10 @@
-.todo-container{
+.todo-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+section {
+    height: 30rem;
+    background: red;
 }

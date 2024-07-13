@@ -17,11 +17,6 @@ export class HighlightedDirective {
       return this.appHighlighted;
     }
 
-  @HostBinding('style.borderLeft')
-    get cssStyle() {
-      return '2px solid red';
-    }
-
   @HostListener('mouseenter')
     onMouseEnter() {
       this.appHighlighted = true;
