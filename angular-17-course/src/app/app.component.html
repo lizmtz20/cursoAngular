@@ -1,22 +1,37 @@
-<div class="todo-container">
-    <!-- <app-todo
-        *ngIf="todoData"
-        #todoRef
-        [todoData]="todoData"
-        (onClickIcon)="todoData = null"
-    >
-        <app-input placeholder="Nombres"></app-input>
-        <app-input placeholder="Apellidos"></app-input>
-        <app-input placeholder="Edad" type="number"></app-input>
-        <div class="comment" style="margin-top: 1rem;">
-            <textarea rows="5"></textarea>
-        </div>
-    </app-todo> -->
-    <router-outlet></router-outlet>
-</div>
+<div [appHighlighted]="false">Header</div>
+<br><br>
+<button (click)="highlightedDirective.onToggle()">Resaltar</button>
+<br><br>
+@if (todoData) {
+    <div class="todo-container">
+        <app-todo
+            #todoRef
+            [appHighlighted]="false"
+            (onToggleHighlighted)="onToggleHighlighted($event)"
+            [todoData]="todoData"
+            (onClickIcon)="getTodoInfo($event)"
+        >
+         <ng-container *appNgxUnless="todoData.hidden">
+            <div class="name">Alex</div>
+            <div class="last-name">Ramirez</div>
+            <div projected-content="todo">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore eveniet nulla repellendus placeat rem rerum, in expedita dolorem sint ex odit sit culpa ad enim fugiat eius laborum reprehenderit harum.</div>
+         </ng-container>
+        </app-todo>
+    </div>
+} @else {
+    <ng-container *ngTemplateOutlet="noTodo; context: {$implicit: 'Alex', lastName: 'Ramirez'}"></ng-container>
+}
 
-<br>
-<br>
-<button (click)="router.navigate([''])">Home</button>
-<button (click)="router.navigate(['/todo'])">Todo</button>
-<button (click)="change()">Modificar</button>
+<ng-template #noTodo let-name let-lastName="lastName">
+    <div>
+        No hay elementos
+    </div>
+    <div>
+        nombre: {{name}}
+    </div>
+    <div>
+        Apellido: {{lastName}}
+    </div>
+</ng-template>
+
+<!-- <button (click)="orderData()">Ordenar</button> -->

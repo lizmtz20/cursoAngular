@@ -1,10 +1,11 @@
-import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { TodoComponent } from './pages/todo/todo.component';
 import { TODO_DATA } from '../assets/todo';
 import { NTodo } from './models/todo.model';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from './components/input/input.component';
+import { HighlightedDirective } from './directives/highlighted.directive';
+import { NgxUnlessDirective } from './directives/ngx-unless.directive';
 
 @Component({
   selector: 'app-root',
@@ -13,44 +14,34 @@ import { InputComponent } from './components/input/input.component';
     RouterOutlet,
     TodoComponent,
     CommonModule,
-    InputComponent
+    HighlightedDirective,
+    NgxUnlessDirective
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  todoData: any = TODO_DATA[0];
+export class AppComponent implements AfterViewInit {
+  todoData = TODO_DATA[0];
 
-  // @ViewChild('todoRef', {read : ElementRef }) todo?: ElementRef;
+  constructor() {}
+  ngAfterViewInit(): void {
+    // console.log(this.highlightedDirective);
+  }
 
-  @ViewChildren('todoRef', { read: ElementRef}) todo?: QueryList<ElementRef>;
-  
-  constructor(
-    public router: Router
-  ) {}
+  @ViewChild('todoRef', { read: HighlightedDirective}) highlightedDirective!: HighlightedDirective;
 
   getTodoInfo(val: NTodo.TodoData) {
-    // console.log(val);
+    console.log(val);
   }
 
   trackByFn(_index: number, item: NTodo.TodoData) {
     return item.id;
   }
 
-  orderData() {
-    // this.todoData.sort((a, b) => a.priority -  b.priority);
-  }
-
-  change() {
-    // const todo = document.querySelectorAll('app-todo');
-    // this.todo?.changes.subscribe(values => {
-    //   console.log(values);
-      
-    // })
-    this.todoData = { ...this.todoData, description: 'ngOnChanges' };
-  }
-
-  addTodo() {
-    // this.todoData = TODO_DATA.filter(item => item.id < 5);
+  // orderData() {
+  //   this.todoData.sort((a, b) => a.priority -  b.priority);
+  // }
+  onToggleHighlighted(highlighted: boolean) {
+    console.log(highlighted);
   }
 }
